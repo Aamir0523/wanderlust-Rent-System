@@ -10,10 +10,12 @@
    class="card-img-top" 
    alt="listing_image"  >
   <div class="card-body">
+
     <p class="card-text">
       Oened by
       <b><%= listing.title %></b> 
-      <i><%= listing.owner ? listing.owner.id : "No Owner" %></i>
+      <i><%= listing.owner ? listing.owner.username && listing.owner._id : "No Owner" %></i>
+      <p>
       <p><%= listing.description %> <br></p>
       <p> &#8377;  <%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %> </p>
       <p><%= listing.location %> </p>
@@ -23,7 +25,9 @@
 </div>
 <br>
 
-<% if(currUser && listing.owner && currUser._id.equals(listing.owner._id)) { %>
+
+
+<% if(typeof currUser !== "undefined" && currUser && listing.owner && currUser._id.toString() === listing.owner._id.toString()) { %>
 <div class="btns">
      <a href="/listings/<%=listing._id.toString() %>/edit" 
       class="btn btn-dark col-2 offset-3">Edit</a>
@@ -37,7 +41,10 @@
  <!-- rating -->
  <div class="col-8 offset-3">
   <hr />
-  <% if(currUser) { %>
+
+
+   <% if(typeof currUser !== "undefined" && currUser) { %>
+ 
   <h4>Leave a Review</h4>
   <form action="/listings/<%= listing._id %>/reviews" 
     method="POST" 
@@ -102,10 +109,10 @@
       </p>
         <p class="card-text"><%=review.comment%></p>
         
-      </div>
+    </div>
       <form class="mb-3" 
        method="POST"
-       action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+       action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
         <button class="btn btn-sm btn-dark">Delete</button>
       </form>
     </div>

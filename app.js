@@ -46,7 +46,6 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
-app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
 
 
@@ -75,6 +74,8 @@ const sessionOptions = {
 };
 
 
+
+
 app.get("/" ,(req, res) => {
     res.redirect("/listings");
 });
@@ -85,14 +86,15 @@ app.get("/" ,(req, res) => {
 app.use(session(sessionOptions));
 app.use(flash());
 
-app.use(passport.initialize());
-app.use(passport.session());
 
-
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new 
+  LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((req, res, next)=>{
     res.locals.success = req.flash("success");
@@ -102,6 +104,17 @@ app.use((req, res, next)=>{
     
     next();
 });
+
+
+
+// app.use((req, res, next)=>{
+//     res.locals.success = req.flash("success");
+//     res.locals.error = req.flash("error");
+//     //console.log(res.locals.success);
+//     res.locals.currUser = req.user;
+    
+//     next();
+// });
 
 
 
@@ -118,7 +131,7 @@ app.use((req, res, next)=>{
 
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong" } = err;
-  res.status(statusCode).render("error.ejs", { message });
+  res.status(statusCode).render("error", { message });
 });
 
 

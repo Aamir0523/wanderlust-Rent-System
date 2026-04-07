@@ -109,3 +109,9 @@ font-weight: 400;
     padding-left: 0;
     padding-right: 0;
 }
+
+.edit-img{
+    width: 20%;
+    height: 10vh;
+    object-fit: cover;
+}

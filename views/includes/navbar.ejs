@@ -26,7 +26,7 @@
 
 
 <nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
-  <div class="container-fluid">
+  <div class="container-fluid px-4">
     <a 
     class="navbar-brand" 
     href="/listings">
@@ -42,6 +42,13 @@
       <span 
       class="navbar-toggler-icon"></span>
     </button>
+
+    <div class="mobile-menu d-lg-none">
+  <a href="/listings">Explore</a>
+  <a href="/listings/new">Airbnb your home</a>
+  <a href="/logout">Logout</a>
+</div>
+
     <div 
     class="collapse navbar-collapse" 
     id="navbarNavAltMarkup">
@@ -62,21 +69,36 @@
     </form>
       </div>
 
+      <div class="navbar-nav ms-auto align-items-center gap-2">
 
-      <div class="navbar-nav ms-auto">
+  <% if(typeof currUser !== "undefined" && currUser) { %>
 
-        <% if(typeof currUser !== "undefined" && currUser) { %>
-          
-  <a class="nav-link" href="/listings/new">Airbnb your home</a>
-  <a class="nav-link" href="/logout"><b>Log out</b></a>
-<% } else { %>
-  <a class="nav-link" href="/signup"><b>Sign up</b></a>
-  <a class="nav-link" href="/login"><b>Login</b></a>
-<% } %>
+    <a class="nav-btn" href="/listings/new">
+      <i class="fa-solid fa-house"></i> Airbnb your home
+    </a>
 
-   
-      </div>
-           
+    <a class="nav-btn logout-btn" href="/logout">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </a>
+
+    <div class="profile-circle">
+  <i class="fa-solid fa-user"></i>
+</div>
+
+  <% } else { %>
+
+    <a class="nav-btn" href="/signup">
+      <i class="fa-solid fa-user-plus"></i> Sign up
+    </a>
+
+    <a class="nav-btn login-btn" href="/login">
+      <i class="fa-solid fa-right-to-bracket"></i> Login
+    </a>
+
+  <% } %>
+
+</div>
+
     </div>
   </div>
 </nav>
